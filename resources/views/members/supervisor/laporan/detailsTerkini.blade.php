@@ -1,0 +1,81 @@
+@extends('layouts.members2')
+
+@section('content')
+
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3>Laporan {{ $status }}</h3>
+                </div>
+                <panel class="panel-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <td colspan="6">
+                                <table class="table">
+                                    <tr>
+                                        <td width="200"><strong>Juruteknik / Penyenggara </strong></td>
+                                        <td width="15"><strong>:</strong></td>
+                                        <td>{{ ucWords(strtolower($user))  }}</td>
+                                    </tr><tr>
+                                        <td><strong>Bulan / Tahun</strong></td>
+                                        <td><strong>:</strong></td>
+                                        <td>{{ $month }}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Bil</th>
+                            <th>Pelapor / Bahagian</th>
+                            <th>Peralatan / No Siri / Ringkasan Kerosakan</th>
+                            <th>No Jobsheet</th>
+                            <th>Status</th>
+                            <th>Tempoh <br />(hari)</th>
+                            <th>Pilihan</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($laporans as $laporan)
+                            <tr>
+                                <td>{{ $bil++ }}</td>
+                                <td>
+                                    {{ strtoupper(strtolower($laporan->pelapor)) }} <br />
+                                    {{ $laporan->cawangan->bahagian->nama }} <br />
+                                    {{ $laporan->tarikh->format('d-m-Y') }}
+                                </td>
+                                <td>
+                                    <a href="#" title="Details">{{ $laporan->peralatan->nama }}</a> <br />
+                                    > <strong>No. Siri</strong>  <br />&nbsp;&nbsp;&nbsp;{{ $laporan->noSiri }} <br />
+                                    > <strong>Ringkasan Kerosakan </strong>  <br />&nbsp;&nbsp;&nbsp;{{ strtoupper($laporan->ringkasanKerosakan) }}
+                                </td>
+                                <td>{{ $laporan->noJobsheet }}</td>
+                                <td>
+                                    @if(!empty($laporan->laporanstatus->nama))
+                                        {{ $laporan->laporanstatus->nama }}
+                                    @endif
+                                </td>
+                                <td align="center">{{ $laporan->tarikh->diffInDays(\Carbon\Carbon::now()) }}</td>
+                                <td>
+                                    <button class="btn btn-danger">Batal</button>
+                                    <button class="btn btn-success">Kemaskini</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @include('display.backAndPrint')
+                </panel>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+@stop

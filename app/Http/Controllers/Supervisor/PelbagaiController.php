@@ -52,17 +52,20 @@ class PelbagaiController extends Controller
     public function bulananPenempatan()
     {
         $tarikh = Request::get('year') . '-' . Request::get('month');
-        $count = Array();
+        $counts = Array();
 
         $bil = 1;
 
-        $units = Unit::where('nama', \Auth::user()->units->nama);
+        $units = Unit::where('id', \Auth::user()->unit)
+            ->get();
 
         foreach($units as $unit)
         {
-            $categories = Kategori::where('id', $unit->unit)
+            $categories = Kategori::where('unit', $unit->id)
                 ->where('status', 'active')
                 ->get();
+
+//            dd($categories->toArray());
 
             foreach($categories as $category)
             {
@@ -72,15 +75,15 @@ class PelbagaiController extends Controller
                 foreach($peralatans as $peralatan)
                 {
                     $laporans = Laporan::where('peralatan_id', $peralatan->id)
+                        ->where('tarikh', 'like', $tarikh . '%')
                         ->count();
-
-                    dd($laporans);
+                    $data = ['peralatan' => $peralatan->nama, 'bilangan' => $laporans];
+                    array_push($counts, $data);
                 }
             }
         }
 
-        return View('members.supervisor.laporan.bulananPenempatan', compact('bil', 'laporans'));
-
+        return View('members.supervisor.laporan.bulananPenempatan', compact('bil', 'counts'));
     }
 
 

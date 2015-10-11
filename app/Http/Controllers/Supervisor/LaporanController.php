@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Supervisor;
 
-use Illuminate\Http\Request;
+use App\Cawangan;
+use App\Peralatan;
 use Illuminate\Support\Facades\Redirect;
 
 use Carbon\Carbon;
 
-use App\Http\Requests;
+use Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Laporan;
@@ -162,7 +163,8 @@ class LaporanController extends Controller
             $laporans = Laporan::where('user', $username)
                 ->where('tarikh', '<', Carbon::now()->startOfMonth())
                 ->where('status', '!=', 4)
-                ->get();
+                ->paginate(10);
+//                ->get();
 
         } else if($status == 'grandTotal') {
             $laporans = Laporan::where('user', $username)
@@ -187,6 +189,36 @@ class LaporanController extends Controller
 
         return View('members.supervisor.laporan.detailsTerkini', compact('bil', 'laporans', 'user', 'status', 'month'));
     }
+
+    public function kemaskini()
+    {
+        $laporan = Laporan::find(Request::get('id'));
+        $cawangan = Cawangan::lists('nama', 'id');
+        $peralatan = Peralatan::lists('nama', 'id');
+
+        return View('members.supervisor.laporan.kemaskini', compact('laporan', 'cawangan', 'peralatan'));
+    }
+
+    public function update2($id)
+    {
+        $laporan = Laporan::findOrFail($id);
+
+        $laporan->fill(Request::all());
+
+        $laporan->status = 4;
+
+        if($laporan->save())
+            \Session::flash('success', 'Laporan telah dikemaskini');
+        else
+            \Session::flash('error', 'Laporan gagal dikemaskini');
+
+        return Redirect::route('members.supervisor.laporan.terkini');
+
+    }
+
+
+
+
 }
 
 

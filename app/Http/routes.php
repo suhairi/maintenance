@@ -142,6 +142,7 @@ Route::group(['prefix' => '/members'], function()
 
         Route::group(['prefix' => '/laporan'], function()
         {
+            // assigning laporan to a technician
             Route::post('{id}/update', [
                 'as'            => 'members.supervisor.laporan.update',
                 'uses'          => 'Supervisor\LaporanController@update'
@@ -163,7 +164,15 @@ Route::group(['prefix' => '/members'], function()
                 'uses'          => 'Supervisor\PelbagaiController@bulananPenempatan'
             ]);
 
+            Route::post('tahunanPpk', [
+                'as'            => 'members.supervisor.laporan.tahunanPpk',
+                'uses'          => 'Supervisor\PelbagaiController@tahunanPpk'
+            ]);
 
+            Route::post('tahunanXPpk', [
+                'as'            => 'members.supervisor.laporan.tahunanXPpk',
+                'uses'          => 'Supervisor\PelbagaiController@tahunanXPpk'
+            ]);
 
             Route::get('terkini', [
                 'as'            => 'members.supervisor.laporan.terkini',
@@ -175,11 +184,19 @@ Route::group(['prefix' => '/members'], function()
                 'uses'          => 'Supervisor\LaporanController@detailsTerkini'
             ]);
 
+            Route::get('kemaskini', [
+                'as'            => 'members.supervisor.laporan.kemaskini',
+                'uses'          => 'Supervisor\LaporanController@kemaskini'
+            ]);
+
+            // give a selesai status to a laporan
+            Route::post('updates/{id}', [
+                'as'            => 'members.supervisor.laporan.update2',
+                'uses'          => 'Supervisor\LaporanController@update2'
+            ]);
+
 
         });
-
-
-
 
     });
 

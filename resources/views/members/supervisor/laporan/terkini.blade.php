@@ -4,7 +4,7 @@
 
     <div class="row">
 
-        <div class="col-xs-8">
+        <div class="col-xs-12">
 
             <div class="panel panel-primary printable" id="printable">
                 <div class="panel-heading">
@@ -16,13 +16,13 @@
                             <tr align="center" valign="middle">
                                 <th>Bil</th>
                                 <th width="200">Nama</th>
-                                <th align="center">Tugasan Belum Selesai</th>
-                                <th align="center">Tugasan KIV</th>
-                                <th align="center">Tugasan Selesai</th>
-                                <th align="center">Tugasan Closing</th>
-                                <th align="center">Jumlah Tugasan Bulanan <?= date('M-Y'); ?> <br />Keseluruhan</th>
-                                <th align="center">Jumlah Tugasan <br />Bulan Sebelum dan Belum Selesai</th>
-                                <th align="center">Jumlah Tugasan Keseluruhan <br />Belum Selesai/KIV</th>
+                                <th><div align="center">Tugasan Belum Selesai</div></th>
+                                <th><div align="center">Tugasan KIV</div></th>
+                                <th><div align="center">Tugasan Selesai</div></th>
+                                <th><div align="center">Tugasan Closing</div></th>
+                                <th><div align="center">Jumlah Tugasan Bulanan <?= date('M-Y'); ?> <br />Keseluruhan</div></th>
+                                <th><div align="center">Jumlah Tugasan <br />Bulan Sebelum dan Belum Selesai</div></th>
+                                <th><div align="center">Jumlah Tugasan Keseluruhan <br />Belum Selesai/KIV</div></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,16 +117,16 @@
 
         </div>
 
-        <div class="col-xs-4 hidden-print">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4>Carta</h4>
-                </div>
-                <div class="panel-body">
-                    <div id="container" style="width:100%; height:400px;"></div>
-                </div>
-            </div>
-        </div>
+        {{--<div class="col-xs-4 hidden-print">--}}
+            {{--<div class="panel panel-primary">--}}
+                {{--<div class="panel-heading">--}}
+                    {{--<h4>Carta</h4>--}}
+                {{--</div>--}}
+                {{--<div class="panel-body">--}}
+                    {{--<div id="container" style="width:100%; height:400px;"></div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
     </div>
 

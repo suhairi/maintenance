@@ -11,7 +11,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('complaint') }}">Aduan Sistem</a></li>
                 <li><a href="#">Mesej</a></li>
                 <li class="dropdown">
@@ -21,10 +21,6 @@
                             <li><a href="{{ route('members.supervisor.laporan.terkini') }}">Ringkasan Terkini</a></li>
                             <li><a href="{{ route('members.supervisor.pelbagai') }}">Pelbagai</a></li>
                         @endif
-                        @if(Auth::user()->level_id <= 3 && Auth::user()->level_id > 1)
-                            <li><a href="{{ route('members.'.strtolower(Auth::user()->level->nama).'.laporan.harian') }}">Harian</a></li>
-                        @endif
-
                     </ul>
                 </li>
                 <li class="dropdown">

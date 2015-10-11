@@ -38,9 +38,11 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <?php $bil = (((Request::get('page') - 1) * 10) + 1); ?>
+
                         @foreach($laporans as $laporan)
                             <tr>
-                                <td>{{ $bil++ }}</td>
+                                <td>{{ $bil ++  }}</td>
                                 <td>
                                     {{ strtoupper(strtolower($laporan->pelapor)) }} <br />
                                     {{ $laporan->cawangan->bahagian->nama }} <br />
@@ -60,18 +62,19 @@
                                 <td align="center">{{ $laporan->tarikh->diffInDays(\Carbon\Carbon::now()) }}</td>
                                 <td>
                                     <button class="btn btn-danger">Batal</button>
-                                    <button class="btn btn-success">Kemaskini</button>
+                                    <a href="{{ route('members.supervisor.laporan.kemaskini', ['id' => $laporan->id]) }}">
+                                        <button class="btn btn-success">Kemaskini</button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    <div align="center">{!! $laporans->render() !!}</div>
                     @include('display.backAndPrint')
                 </panel>
 
             </div>
-
-
 
         </div>
     </div>

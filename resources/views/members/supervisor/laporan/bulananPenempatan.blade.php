@@ -4,70 +4,58 @@
 @section('content')
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-8">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4>Laporan Bulanan dan Penempatan</h4>
                 </div>
                 <div class="panel-body">
 
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover table-bordered">
                         <thead>
-                        <th>Bil</th>
-                        <th>Pelapor</th>
-                        <th>Bahagian</th>
-                        @if(Auth::user()->level_id == 1)
-                            <th>Technician</th>
-                        @endif
-                        <th>Kerosakan</th>
-                        <th>Ringkasan Kerosakan</th>
-                        <th>Status</th>
-                        <th>Catatan</th>
+                            <tr>
+                                <th>Bil</th>
+                                <th>Kategori Kerosakan</th>
+                                <th>Kerosakan</th>
+                                <th>Bilangan</th>
+                            </tr>
                         </thead>
+                        <tbody>
+                        <?php $next = 0; ?>
+                        @if(count($kategoris) > 0)
+                            @foreach($kategoris as $kategori)
+                                <?php $next++; ?>
+                                @foreach($counts as $count)
 
-                        @if($counts)
-                            @foreach($counts as $count)
-                                {{--@if($laporan->peralatan->kategori->unit == \Auth::user()->unit)--}}
-                                    {{--<tbody>--}}
-                                    {{--<td>{{ $bil++ }}</td>--}}
-                                    {{--<td>{{ $laporan->pelapor }} <br /> <small>{{ $laporan->tarikh->format('d-m-Y') }}</small></td>--}}
-                                    {{--<td>{{ $laporan->cawangan->bahagian->nama }} <br /> {{ $laporan->cawangan->nama }}</td>--}}
-                                    {{--@if(Auth::user()->level_id == 1)--}}
-                                        {{--<td align="center">{{ $laporan->users->nama }}</td>--}}
-                                    {{--@endif--}}
-                                    {{--<td>{{ $laporan->peralatan->kategori->units->nama }}<br /><small>( {{ $laporan->peralatan->nama }} )</small></td>--}}
-                                    {{--<td>{{ $laporan->ringkasanKerosakan }} </td>--}}
-                                    {{--<td>--}}
-                                        {{--@if(!empty($laporan->laporanstatus->nama))--}}
-                                            {{--{{ $laporan->laporanstatus->nama }}--}}
-                                        {{--@else--}}
-                                            {{--{{ 'null' }}--}}
-                                        {{--@endif--}}
-                                    {{--</td>--}}
-                                    {{--<td>--}}
-                                        {{--@if(!empty($laporan->catatan))--}}
-                                            {{--{{ $laporan->catatan }}--}}
-                                        {{--@endif--}}
-                                    {{--</td>--}}
-                                    {{--</tbody>--}}
-                                {{--@endif--}}
-                                {{--{{  dd($count['peralatan']) }}--}}
-                                Nama : {{ $count['peralatan'] }} <br />
-                                Bilangan : {{ $count['bilangan'] }} <br /><br />
+                                    @if($count['kategori'] == $kategori->nama)
+                                        <tr>
+                                            @if($bil == $next)
+                                                <td>{{ $bil++ }}</td>
+                                                <td>{{ $kategori->nama }}</td>
+                                                <td>{{ $count['peralatan'] }}</td>
+                                                <td align="center">{{ $count['count'] }}</td>
+                                            @else
+                                                <td>&nbsp;</td>
+                                                <td>{{ $kategori->name }}</td>
+                                                <td>{{ $count['peralatan'] }}</td>
+                                                <td align="center">{{ $count['count'] }}</td>
+                                            @endif
+                                        </tr>
+                                    @endif
 
-
+                                @endforeach
                             @endforeach
+                            <tr>
+                                <td colspan="3" align="right"><strong>JUMLAH</strong></td>
+                                <td align="center"><strong>{{ $jumlah }}</strong></td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td colspan="9" class="alert alert-danger" padding="1"><b>Tiada Laporan</b></td>
+                            </tr>
                         @endif
 
-                        <?php //print_r($laporans); ?>
-
-                        {{--@if(empty($laporans->toArray()))--}}
-                            {{--<tbody>--}}
-                            {{--<tr>--}}
-                                {{--<td colspan="9" class="alert alert-danger" padding="1"><b>Tiada Laporan</b></td>--}}
-                            {{--</tr>--}}
-                            {{--</tbody>--}}
-                        {{--@endif--}}
+                        </tbody>
                     </table>
                     @include('display.backAndPrint')
 

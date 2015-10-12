@@ -174,6 +174,11 @@ Route::group(['prefix' => '/members'], function()
                 'uses'          => 'Supervisor\PelbagaiController@tahunanXPpk'
             ]);
 
+            Route::post('ringkasanPeratusan', [
+                'as'            => 'members.supervisor.laporan.ringkasanPeratusan',
+                'uses'          => 'Supervisor\PelbagaiController@ringkasanPeratusan'
+            ]);
+
             Route::get('terkini', [
                 'as'            => 'members.supervisor.laporan.terkini',
                 'uses'          => 'Supervisor\LaporanController@terkini'
@@ -230,6 +235,13 @@ Route::group(['prefix' => '/members'], function()
             'as'            => 'members.technician.laporan.harian.carian',
             'uses'          => 'Technician\LaporanController@carian'
         ]);
+
+        Route::get('laporan/terkini', [
+            'as'            => 'members.technician.laporan.terkini',
+            'uses'          => 'Technician\LaporanController@terkini'
+        ]);
+
+
     });
 
     /*

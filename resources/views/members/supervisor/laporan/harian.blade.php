@@ -46,7 +46,7 @@
                                     </td>
                                     <td>
                                         @if(!empty($laporan->catatan))
-                                            {{ $laporan->catatan }}
+                                            <strong>{{ strtoupper($laporan->user) }} : </strong><br /><br />{{ $laporan->catatan }}
                                         @endif
                                     </td>
                                     </tbody>
@@ -56,7 +56,7 @@
 
                         <?php //print_r($laporans); ?>
 
-                        @if(empty($laporans->toArray()))
+                        @if($laporans->isEmpty())
                             <tbody>
                             <tr>
                                 <td colspan="9" class="alert alert-danger" padding="1"><b>Tiada Laporan</b></td>

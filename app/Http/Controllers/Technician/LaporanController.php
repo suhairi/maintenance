@@ -45,6 +45,9 @@ class LaporanController extends Controller
 
         $laporan->fill(\Input::all());
 
+        if(\Input::get('status') == 4)
+            $laporan->tarikhSiap = Carbon::now();
+
         if($laporan->save())
             \Session::flash('success', 'Kemaskini Laporan berjaya');
         else
@@ -81,4 +84,18 @@ class LaporanController extends Controller
 
         return View('members.technician.carian', compact('bil', 'laporans', 'tarikh'));
     }
+
+    public function terkini()
+    {
+        $bil = 1;
+        $laporans = Laporan::where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
+            ->where('user', Auth::user()->username)
+            ->get();
+
+//        dd($laporans);
+        return View('members.technician.laporan.terkini', compact('bil', 'laporans'));
+
+    }
+
+
 }

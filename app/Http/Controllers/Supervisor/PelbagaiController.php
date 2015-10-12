@@ -12,6 +12,7 @@ use App\Kategori;
 use App\Laporan;
 use App\Peralatan;
 use App\Unit;
+use App\User;
 use Request;
 
 class PelbagaiController extends Controller
@@ -31,9 +32,11 @@ class PelbagaiController extends Controller
     public function harian()
     {
         $bil = 1;
-        $laporans = Laporan::where('tarikh', Request::get('tarikh'))
+        $laporans = Laporan::where('tarikh', 'like', Request::get('tarikh') . '%')
             ->get();
 
+//        dd($laporans->toArray());
+//
         return View('members.supervisor.laporan.harian', compact('bil', 'laporans'));
     }
 
@@ -160,6 +163,96 @@ class PelbagaiController extends Controller
 
 //        dd($counts);
         return View('members.supervisor.laporan.tahunanXPpk', compact('bil', 'counts', 'jumlah'));
+    }
+
+    public function ringkasanPeratusan()
+    {
+        $tahun = Request::get('year');
+        $counts1 = [];
+        $counts2 = [];
+
+        for($i=1; $i<=12; $i++)
+        {
+            if($i<10)
+                $bulan = '0' . $i;
+            else
+                $bulan = $i;
+
+            $tarikh = $tahun . '-' . $bulan;
+
+            // In house
+            $users = User::where('jawatan', 'not like', '%vendor%')
+                ->where('status', 1)
+                ->get();
+
+            $countLess = 0;
+            $countGreater = 0;
+            $total = 0;
+            foreach($users as $user)
+            {
+                $laporans = Laporan::where('tarikh', 'like', $tarikh.'%')
+                    ->where('user', $user->username)
+                    ->get();
+
+                foreach($laporans as $laporan)
+                {
+                    if($laporan->tarikh->diff($laporan->tarikhSiap)->days < 10)
+                        $countLess++;
+                    else
+                        $countGreater++;
+                }
+
+                $total = $countLess + $countGreater;
+            }
+
+            if($total != 0 || $countLess != 0)
+                $peratus = number_format((($countLess / $total) * 100), 2);
+            else
+                $peratus = '0.00';
+
+            array_push($counts1, ['bulan' => $i, 'countLess' => $countLess,
+                'countGreater' => $countGreater, 'total' => $total,
+                'peratus' => $peratus
+            ]);
+
+            // Vendor
+
+            $users = User::where('jawatan', 'like', '%vendor%')
+                ->where('status', 1)
+                ->get();
+
+            $countLess = 0;
+            $countGreater = 0;
+            $total = 0;
+            foreach($users as $user)
+            {
+                $laporans = Laporan::where('tarikh', 'like', $tarikh.'%')
+                    ->where('user', $user->username)
+                    ->get();
+
+                foreach($laporans as $laporan)
+                {
+                    if($laporan->tarikh->diff($laporan->tarikhSiap)->days <= 21)
+                        $countLess++;
+                    else
+                        $countGreater++;
+                }
+
+                $total = $countLess + $countGreater;
+            }
+
+            if($total != 0 || $countLess != 0)
+                $peratus = number_format((($countLess / $total) * 100), 2);
+            else
+                $peratus = '0.00';
+
+            array_push($counts2, ['bulan' => $i, 'countLess' => $countLess,
+                'countGreater' => $countGreater, 'total' => $total,
+                'peratus' => $peratus
+            ]);
+        }
+
+        return View('members.supervisor.laporan.ringkasanPeratusan', compact('bil', 'counts1', 'counts2'));
     }
 
 

@@ -151,13 +151,15 @@ class LaporanController extends Controller
                 ->where('status', '!=', 4)
                 ->where('status', '')
 //                ->earliest()
-                ->get();
+                ->paginate(10);
+//                ->get();
 
         } else if($status == 'totalCurrent') {
             $laporans = Laporan::where('user', $username)
                 ->where('tarikhSiap', 'like', '0000-00-00%')
                 ->where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
-                ->get();
+                ->paginate(10);
+//                ->get();
 
         } else if($status == 'totalBefore') {
             $laporans = Laporan::where('user', $username)
@@ -170,14 +172,13 @@ class LaporanController extends Controller
             $laporans = Laporan::where('user', $username)
                 ->where('status', '!=', 4)
                 ->where('status', '!=', 0)
-                ->get();
+                ->paginate(10);
+//                ->get();
         } else {
             $laporans = Laporan::where('user', $username)
-                ->where('tarikhSiap', 'like', '0000-00-00%')
                 ->where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
                 ->where('status', $status)
-                ->get();
-
+                ->paginate(10);
         }
 
 //        dd($laporans);
@@ -205,7 +206,8 @@ class LaporanController extends Controller
 
         $laporan->fill(Request::all());
 
-        $laporan->status = 4;
+        if(Request::get('status') == 4)
+            $laporan->tarikhSiap = Carbon::now();
 
         if($laporan->save())
             \Session::flash('success', 'Laporan telah dikemaskini');

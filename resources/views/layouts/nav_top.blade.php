@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('complaint') }}">Aduan Sistem</a></li>
-                <li><a href="#">Mesej</a></li>
+                {{--<li><a href="#">Mesej</a></li>--}}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laporan <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -21,6 +21,11 @@
                             <li><a href="{{ route('members.supervisor.laporan.terkini') }}">Ringkasan Terkini</a></li>
                             <li><a href="{{ route('members.supervisor.pelbagai') }}">Pelbagai</a></li>
                         @endif
+                        @if(Auth::user()->level_id == 3)
+                            <li><a href="{{ route('members.technician.laporan.terkini') }}">Ringkasan Terkini</a></li>
+                        @endif
+
+
                     </ul>
                 </li>
                 <li class="dropdown">

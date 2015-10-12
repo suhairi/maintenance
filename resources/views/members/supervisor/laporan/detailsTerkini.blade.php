@@ -38,7 +38,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $bil = (((Request::get('page') - 1) * 10) + 1); ?>
+                        <?php //$bil = (((Request::get('page') - 1) * 10) + 1); ?>
 
                         @foreach($laporans as $laporan)
                             <tr>
@@ -56,7 +56,8 @@
                                 <td>{{ $laporan->noJobsheet }}</td>
                                 <td>
                                     @if(!empty($laporan->laporanstatus->nama))
-                                        {{ $laporan->laporanstatus->nama }}
+                                        {{ $laporan->laporanstatus->nama }} <br /><br />
+                                        <small>Siap pada : <br />{{ $laporan->tarikhSiap->format('d-m-Y') }}</small>
                                     @endif
                                 </td>
                                 <td align="center">{{ $laporan->tarikh->diffInDays(\Carbon\Carbon::now()) }}</td>

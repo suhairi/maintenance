@@ -42,12 +42,18 @@ class PelbagaiController extends Controller
 
     public function bulanan()
     {
-        $tarikh = Request::get('year') . '-' . Request::get('month');
+        $tahun = Request::get('year');
+
+         if(Request::get('month') < 10)
+             $bulan = '0' . Request::get('month');
+
+        $tarikh = $tahun . '-' . $bulan;
 
         $bil = 1;
         $laporans = Laporan::where('tarikh', 'like', $tarikh .'%')
-            ->get();
+            ->paginate(10);
 
+//        dd($laporans);
         return View('members.supervisor.laporan.bulanan', compact('bil', 'laporans'));
 
     }

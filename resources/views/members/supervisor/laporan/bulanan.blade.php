@@ -56,14 +56,15 @@
 
                         <?php //print_r($laporans); ?>
 
-                        @if(empty($laporans->toArray()))
-                            <tbody>
-                            <tr>
-                                <td colspan="9" class="alert alert-danger" padding="1"><b>Tiada Laporan</b></td>
-                            </tr>
-                            </tbody>
-                        @endif
+                        {{--@if(empty($laporans->toArray()))--}}
+                            {{--<tbody>--}}
+                            {{--<tr>--}}
+                                {{--<td colspan="9" class="alert alert-danger" padding="1"><b>Tiada Laporan</b></td>--}}
+                            {{--</tr>--}}
+                            {{--</tbody>--}}
+                        {{--@endif--}}
                     </table>
+                    <div align="center">{!! $laporans->render() !!}</div>
                     @include('display.backAndPrint')
 
                 </div>

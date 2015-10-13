@@ -7,7 +7,7 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3>Laporan {{ $status }}</h3>
+                    <h3>Laporan {{ $title }}</h3>
                 </div>
                 <panel class="panel-body">
                     <table class="table table-striped table-hover">
@@ -38,7 +38,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php //$bil = (((Request::get('page') - 1) * 10) + 1); ?>
+
+                        @if(!empty($_GET['page']))
+                            <?php $bil = ((($_GET['page'] - 1) * 10) + 1); ?>
+                        @endif
 
                         @foreach($laporans as $laporan)
                             <tr>
@@ -60,7 +63,13 @@
                                         <small>Siap pada : <br />{{ $laporan->tarikhSiap->format('d-m-Y') }}</small>
                                     @endif
                                 </td>
-                                <td align="center">{{ $laporan->tarikh->diffInDays(\Carbon\Carbon::now()) }}</td>
+                                <td align="center">
+                                    <?php $tarikh = $laporan->tarikhSiap; ?>
+                                    @if(strpos($laporan->tarikhSiap, '0000-00') === false)
+                                        <?php $tarikh = \Carbon\Carbon::now(); ?>
+                                    @endif
+                                    {{ $laporan->tarikh->diffInDays($tarikh) }}
+                                </td>
                                 <td>
                                     <button class="btn btn-danger">Batal</button>
                                     <a href="{{ route('members.supervisor.laporan.kemaskini', ['id' => $laporan->id]) }}">

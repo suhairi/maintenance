@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Supervisor;
 
 use App\Cawangan;
+use App\Laporanstatus;
 use App\Peralatan;
 use Illuminate\Support\Facades\Redirect;
 
@@ -141,6 +142,7 @@ class LaporanController extends Controller
     public function detailsTerkini($username, $status)
     {
         $laporans = null;
+        $title = '';
 
         if($status == '0')
         {
@@ -150,9 +152,8 @@ class LaporanController extends Controller
                 ->where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
                 ->where('status', '!=', 4)
                 ->where('status', '')
-//                ->earliest()
                 ->paginate(10);
-//                ->get();
+            $title = 'Belum Selesai';
 
         } else if($status == 'totalCurrent') {
             $laporans = Laporan::where('user', $username)
@@ -160,35 +161,40 @@ class LaporanController extends Controller
                 ->where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
                 ->paginate(10);
 //                ->get();
+            $title = '';
 
         } else if($status == 'totalBefore') {
             $laporans = Laporan::where('user', $username)
                 ->where('tarikh', '<', Carbon::now()->startOfMonth())
                 ->where('status', '!=', 4)
                 ->paginate(10);
-//                ->get();
+            $title = 'Bulan Sebelum';
+
 
         } else if($status == 'grandTotal') {
             $laporans = Laporan::where('user', $username)
                 ->where('status', '!=', 4)
                 ->where('status', '!=', 0)
                 ->paginate(10);
-//                ->get();
+            $title = 'Keseluruhan';
+
         } else {
             $laporans = Laporan::where('user', $username)
                 ->where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
                 ->where('status', $status)
                 ->paginate(10);
+
+            $status = Laporanstatus::find($status)->nama;
+            $title = $status;
         }
 
-//        dd($laporans);
         $user = User::where('username', $username)->first();
         $user = $user->nama;
         $month = Carbon::now()->format('m-Y');
 
         $bil = 1;
 
-        return View('members.supervisor.laporan.detailsTerkini', compact('bil', 'laporans', 'user', 'status', 'month'));
+        return View('members.supervisor.laporan.detailsTerkini', compact('bil', 'title', 'laporans', 'user', 'status', 'month'));
     }
 
     public function kemaskini()

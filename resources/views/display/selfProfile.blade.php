@@ -1,4 +1,4 @@
-<div class="panel panel-info">
+<div class="panel panel-primary">
     <div class="panel-heading">
         <h1>Profil Peribadi</h1>
     </div>

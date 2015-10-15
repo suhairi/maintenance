@@ -63,7 +63,6 @@ class LaporanController extends Controller
             ->latest('tarikh')
             ->get();
 
-
         return View('members.supervisor.laporan.harian', compact('bil', 'laporans'));
     }
 
@@ -77,7 +76,6 @@ class LaporanController extends Controller
         $data[] = null;
         $bil = 1;
 
-
         foreach($users as $user)
         {
             //Belum Selesai
@@ -87,8 +85,6 @@ class LaporanController extends Controller
                 ->where('status', '!=', 4)
                 ->count();
             $user['belumSelesai'] = $belumSelesai;
-
-//            dd(Carbon::now()->startOfMonth());
 
             //KIV
             $kiv = Laporan::where('user', $user->username)
@@ -116,7 +112,6 @@ class LaporanController extends Controller
                 ->where('tarikh', '>=', Carbon::now()->startOfMonth())
                 ->count();
             $user['totalCurrentMonth'] = $totalCurrentMonth;
-//            dd(Carbon::now()->startOfMonth());
 
             //Jumlah tugasan bulan sebelum dan belum selesai
             $totalPreviousMonth = Laporan::where('user', $user->username)
@@ -131,10 +126,7 @@ class LaporanController extends Controller
                 ->where('status', '!=', 0)
                 ->count();
             $user['grandTotal'] = $grandTotal;
-//            var_dump($user->toArray());
         }
-
-//        dd($users->toArray());
 
         return View('members.supervisor.laporan.terkini', compact('bil', 'users'));
     }
@@ -157,10 +149,9 @@ class LaporanController extends Controller
 
         } else if($status == 'totalCurrent') {
             $laporans = Laporan::where('user', $username)
-                ->where('tarikhSiap', 'like', '0000-00-00%')
+                ->where('tarikh', '>=', Carbon::now()->startOfMonth())
                 ->where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
                 ->paginate(10);
-//                ->get();
             $title = '';
 
         } else if($status == 'totalBefore') {
@@ -223,10 +214,6 @@ class LaporanController extends Controller
         return Redirect::route('members.supervisor.laporan.terkini');
 
     }
-
-
-
-
 }
 
 

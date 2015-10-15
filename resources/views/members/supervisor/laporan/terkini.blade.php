@@ -18,8 +18,8 @@
                                 <th width="200">Nama</th>
                                 <th><div align="center">Tugasan Belum Selesai</div></th>
                                 <th><div align="center">Tugasan KIV</div></th>
-                                <th><div align="center">Tugasan Selesai</div></th>
                                 <th><div align="center">Tugasan Closing</div></th>
+                                <th><div align="center">Tugasan Selesai</div></th>
                                 <th><div align="center">Jumlah Tugasan Bulanan <?= date('M-Y'); ?> <br />Keseluruhan</div></th>
                                 <th><div align="center">Jumlah Tugasan <br />Bulan Sebelum dan Belum Selesai</div></th>
                                 <th><div align="center">Jumlah Tugasan Keseluruhan <br />Belum Selesai/KIV</div></th>
@@ -53,22 +53,22 @@
                                         @endif
                                     </td>
                                     <td align="center">
-                                        @if($user->selesai == 0)
-                                            {{ $user->selesai }}
-                                        @else
-                                            <a href="{{ route('members.supervisor.laporan.detailsTerkini',
-                                                    ['username' => $user->username, 'status' => 4]) }}">
-                                                {{ $user->selesai }}
-                                            </a>
-                                        @endif
-                                    </td>
-                                    <td align="center">
                                         @if($user->closing == 0)
                                             {{ $user->closing }}
                                         @else
                                             <a href="{{ route('members.supervisor.laporan.detailsTerkini',
                                                     ['username' => $user->username, 'status' => 1]) }}">
                                                 {{ $user->closing }}
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td align="center">
+                                        @if($user->selesai == 0)
+                                            {{ $user->selesai }}
+                                        @else
+                                            <a href="{{ route('members.supervisor.laporan.detailsTerkini',
+                                                    ['username' => $user->username, 'status' => 4]) }}">
+                                                {{ $user->selesai }}
                                             </a>
                                         @endif
                                     </td>

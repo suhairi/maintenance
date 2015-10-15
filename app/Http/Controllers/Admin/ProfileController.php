@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\PenggunaStoreRequest;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -43,7 +44,19 @@ class ProfileController extends Controller
     {
         $user = new User;
 
-        if($user->create($request->all()))
+        $data = [
+            'username'      => $request->username,
+            'password'      => Hash::make($request->password),
+            'nama'          => $request->nama,
+            'jawatan'       => $request->jawatan,
+            'cawangan_id'   => $request->cawangan_id,
+            'level_id'      => $request->level_id,
+            'unit'          => $request->unit,
+            'status'        => 1
+
+        ];
+
+        if($user->create($data))
             \Session::flash('success', 'Pengguna berjaya didaftar');
         else
             \Session::flash('error', 'Pengguna gagal didaftar');

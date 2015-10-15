@@ -24,6 +24,7 @@ class LaporanController extends Controller
         $bil = 1;
         $laporans = Laporan::where('user', Auth::user()->username)
             ->where('status', '')
+            ->orWhere('status', null)
             ->get();
 
         \Session::put('lastReport', \Route::currentRouteName());
@@ -45,7 +46,7 @@ class LaporanController extends Controller
 
         $laporan->fill(\Input::all());
 
-        if(\Input::get('status') == 4)
+        if(\Input::get('status') == 4 || \Input::get('status') == 1)
             $laporan->tarikhSiap = Carbon::now();
 
         if($laporan->save())
@@ -80,8 +81,6 @@ class LaporanController extends Controller
             ->latest('tarikh')
             ->get();
 
-//        dd($laporans);
-
         return View('members.technician.carian', compact('bil', 'laporans', 'tarikh'));
     }
 
@@ -92,9 +91,7 @@ class LaporanController extends Controller
             ->where('user', Auth::user()->username)
             ->get();
 
-//        dd($laporans);
         return View('members.technician.laporan.terkini', compact('bil', 'laporans'));
-
     }
 
 

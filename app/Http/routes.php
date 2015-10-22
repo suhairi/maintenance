@@ -164,6 +164,13 @@ Route::group(['prefix' => '/members'], function()
                 'uses'          => 'Supervisor\PelbagaiController@bulananPenempatan'
             ]);
 
+            Route::post('bulananPpk', [
+                'as'            => 'members.supervisor.laporan.bulananPpk',
+                'uses'          => 'Supervisor\PelbagaiController@bulananPpk'
+            ]);
+
+
+
             Route::post('tahunanPpk', [
                 'as'            => 'members.supervisor.laporan.tahunanPpk',
                 'uses'          => 'Supervisor\PelbagaiController@tahunanPpk'

@@ -111,7 +111,7 @@
                                     <h5>Laporan Julat Bulanan mengikut PPK</h5>
                                 </div>
                                 <div class="panel-body">
-                                    {!! Form::open(['route' => 'members.supervisor.laporan.bulananPenempatan', 'method' => 'POST']) !!}
+                                    {!! Form::open(['route' => 'members.supervisor.laporan.bulananPpk', 'method' => 'POST']) !!}
 
                                     <label for="bulanan">Dari</label>
                                     <div class="form-group">
@@ -148,26 +148,26 @@
 
                 <div class="panel-body">
 
-                    <div class="col-xs-4">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h5>Laporan Julat Tahunan dan PPK</h5>
-                            </div>
-                            <div class="panel-body">
-                                {!! Form::open(['route' => 'members.supervisor.laporan.tahunanPpk', 'method' => 'POST']) !!}
+                    {{--<div class="col-xs-4">--}}
+                        {{--<div class="panel panel-primary">--}}
+                            {{--<div class="panel-heading">--}}
+                                {{--<h5>Laporan Julat Tahunan dan PPK</h5>--}}
+                            {{--</div>--}}
+                            {{--<div class="panel-body">--}}
+                                {{--{!! Form::open(['route' => 'members.supervisor.laporan.tahunanPpk', 'method' => 'POST']) !!}--}}
 
-                                <label for="bulanan">Tarikh</label>
-                                <div class="form-group">
-                                    {!! Form::selectRange('year', 2010, date('Y'), date('Y'), ['class' => 'form-control']) !!}
-                                </div>
-                                <div class="form-group" align="right">
-                                    {!! Form::submit('Jana Laporan', ['class' => 'btn btn-primary']) !!}
-                                </div>
+                                {{--<label for="bulanan">Tarikh</label>--}}
+                                {{--<div class="form-group">--}}
+                                    {{--{!! Form::selectRange('year', 2010, date('Y'), date('Y'), ['class' => 'form-control']) !!}--}}
+                                {{--</div>--}}
+                                {{--<div class="form-group" align="right">--}}
+                                    {{--{!! Form::submit('Jana Laporan', ['class' => 'btn btn-primary']) !!}--}}
+                                {{--</div>--}}
 
-                                {!! Form::close() !!}
-                            </div>
-                        </div>
-                    </div>
+                                {{--{!! Form::close() !!}--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     <div class="col-xs-4">
                         <div class="panel panel-primary">

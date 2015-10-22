@@ -24,30 +24,36 @@
                         <th align="center">Pilihan</th>
                     </thead>
 
-                @foreach($laporans as $laporan)
-                        <tr>
-                            <td>{{ $bil++ }}</td>
-                            <td>{{ $laporan->pelapor }}</td>
-                            <td>{{ $laporan->cawangan->bahagian->nama }} <br /> {{ $laporan->cawangan->nama }}</td>
-                            @if(Auth::user()->level_id <= 1)
-                                <td align="center">{{ $laporan->user }}</td>
+                @forelse($laporans as $laporan)
+                    <tr>
+                        <td>{{ $bil++ }}</td>
+                        <td>{{ $laporan->pelapor }}</td>
+                        <td>{{ $laporan->cawangan->bahagian->nama }} <br /> {{ $laporan->cawangan->nama }}</td>
+                        @if(Auth::user()->level_id <= 1)
+                            <td align="center">{{ $laporan->user }}</td>
+                        @endif
+                        <td>{{ $laporan->peralatan->kategori->units->nama }}<br /><small>( {{ $laporan->peralatan->nama }})</small></td>
+                        <td>{{ $laporan->tarikh->format('d-m-Y') }} <br />{{ $laporan->ringkasanKerosakan }} </td>
+                        <td>
+                            @if(!empty($laporan->laporanstatus->nama))
+                                {{ $laporan->laporanstatus->nama }}
                             @endif
-                            <td>{{ $laporan->peralatan->kategori->units->nama }}<br /><small>( {{ $laporan->peralatan->nama }})</small></td>
-                            <td>{{ $laporan->tarikh->format('d-m-Y') }} <br />{{ $laporan->ringkasanKerosakan }} </td>
-                            <td>
-                                @if(!empty($laporan->laporanstatus->nama))
-                                    {{ $laporan->laporanstatus->nama }}
-                                @endif
-                            </td>
-                            <td>
-                                @if(!empty($laporan->catatan))
-                                    {{ $laporan->catatan }}
-                                @endif
-                            </td>
-                            <td align="center">[ <a href="{{ route('members.technician.edit', ['id' => $laporan->id]) }}"> Kemaskini</a> ]</td>
-                        </tr>
-                @endforeach
+                        </td>
+                        <td>
+                            @if(!empty($laporan->catatan))
+                                {{ $laporan->catatan }}
+                            @endif
+                        </td>
+                        <td align="center"><a href="{{ route('members.technician.edit', ['id' => $laporan->id]) }}"><button class="btn btn-primary">Kemaskini</button></a></td>
+                    </tr>
+
+                @empty
+                    <tr class="alert alert-danger">
+                        <td colspan="9">Tiada Data</td>
+                    </tr>
+                @endforelse
                 </table>
+                @include('display.backAndPrint')
                 <div align="center">{!! $laporans->render() !!}</div>
             </div>
         </div>

@@ -25,34 +25,56 @@
                         <th>Catatan</th>
                         </thead>
 
-                        @if($laporans)
-                            @foreach($laporans as $laporan)
-                                @if($laporan->peralatan->kategori->unit == \Auth::user()->unit)
-                                    <tbody>
-                                    <td>{{ $bil++ }}</td>
-                                    <td>{{ $laporan->pelapor }}</td>
-                                    <td>{{ $laporan->cawangan->bahagian->nama }} <br /> {{ $laporan->cawangan->nama }}</td>
-                                    @if(Auth::user()->level_id == 1)
-                                        <td align="center">{{ $laporan->users->nama }}</td>
-                                    @endif
-                                    <td>{{ $laporan->peralatan->kategori->units->nama }}<br /><small>( {{ $laporan->peralatan->nama }} )</small></td>
-                                    <td>{{ $laporan->ringkasanKerosakan }} </td>
-                                    <td>
-                                        @if(!empty($laporan->laporanstatus->nama))
-                                            {{ $laporan->laporanstatus->nama }}
-                                        @else
-                                            {{ 'null' }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(!empty($laporan->catatan))
-                                            <strong>{{ strtoupper($laporan->user) }} : </strong><br /><br />{{ $laporan->catatan }}
-                                        @endif
-                                    </td>
-                                    </tbody>
+                        @foreach($laporans as $laporan)
+                            @if($laporan->peralatan->kategori->unit == \Auth::user()->unit)
+                                <tbody>
+                                <td>{{ $bil++ }}</td>
+                                <td>{{ $laporan->pelapor }}</td>
+                                <td>{{ $laporan->cawangan->bahagian->nama }} <br /> {{ $laporan->cawangan->nama }}</td>
+                                @if(Auth::user()->level_id == 1)
+                                    <td align="center">{{ $laporan->users->nama }}</td>
                                 @endif
-                            @endforeach
-                        @endif
+                                <td>{{ $laporan->peralatan->kategori->units->nama }}<br /><small>( {{ $laporan->peralatan->nama }} )</small></td>
+                                <td>{{ $laporan->ringkasanKerosakan }} </td>
+                                <td>
+                                    @if(!empty($laporan->laporanstatus->nama))
+                                        {{ $laporan->laporanstatus->nama }}
+                                    @else
+                                        {{ 'null' }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty($laporan->catatan))
+                                        <strong>{{ strtoupper($laporan->user) }} : </strong><br /><br />{{ $laporan->catatan }}
+                                    @endif
+                                </td>
+                                </tbody>
+                            @endif
+                            @if(Auth::user()->level->id == 1)
+                                <tbody>
+                                <td>{{ $bil++ }}</td>
+                                <td>{{ $laporan->pelapor }}</td>
+                                <td>{{ $laporan->cawangan->bahagian->nama }} <br /> {{ $laporan->cawangan->nama }}</td>
+                                @if(Auth::user()->level_id == 1)
+                                    <td align="center">{{ $laporan->users->nama }}</td>
+                                @endif
+                                <td>{{ $laporan->peralatan->kategori->units->nama }}<br /><small>( {{ $laporan->peralatan->nama }} )</small></td>
+                                <td>{{ $laporan->ringkasanKerosakan }} </td>
+                                <td>
+                                    @if(!empty($laporan->laporanstatus->nama))
+                                        {{ $laporan->laporanstatus->nama }}
+                                    @else
+                                        {{ 'null' }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty($laporan->catatan))
+                                        <strong>{{ strtoupper($laporan->user) }} : </strong><br /><br />{{ $laporan->catatan }}
+                                    @endif
+                                </td>
+                                </tbody>
+                            @endif
+                        @endforeach
 
                         <?php //print_r($laporans); ?>
 

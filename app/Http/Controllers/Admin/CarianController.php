@@ -12,8 +12,7 @@ use App\Laporan;
 use App\Bahagian;
 use App\Cawangan;
 use App\Laporanstatus;
-
-
+use Illuminate\Support\Facades\Session;
 
 
 class CarianController extends Controller
@@ -35,11 +34,20 @@ class CarianController extends Controller
     public function hasilCarian()
     {
         $bil = 1;
-        $tarikh = \Carbon\Carbon::parse(Input::get('tarikh'))->format('Y-m');
+
+        if(Session::has('tarikh')) {
+            $tarikh = Session::get('tarikh');
+        } else {
+            Session::put('tarikh', \Carbon\Carbon::parse(Input::get('tarikh'))->format('Y-m'));
+            $tarikh = Session::get('tarikh');
+        }
+
+
+//        dd($tarikh);
 
         $laporans = Laporan::where('cawangan_id', Input::get('cawangan_id'))
             ->where('tarikh', 'like', $tarikh . '%')
-            ->orWhere('status', Input::get('status'))
+            ->where('status', Input::get('status'))
             ->paginate(10);
 
         return View('members.admin.hasilCarian', compact('bil', 'laporans'));

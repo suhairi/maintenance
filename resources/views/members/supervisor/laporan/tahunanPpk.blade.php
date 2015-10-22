@@ -7,7 +7,7 @@
         <div class="col-xs-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h4>Laporan Bulanan dan Penempatan</h4>
+                    <h4>Laporan Tahunan dan Penempatan</h4>
                 </div>
                 <div class="panel-body">
 

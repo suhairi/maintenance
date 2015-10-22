@@ -29,7 +29,7 @@
                     ?>
                     @foreach($counts1 as $count)
                         <tr >
-                            <th class="alert alert-info"><div align="center">{{ date('F', mktime(0, 0, 0, $count['bulan'], 10)) }}</div></th>
+                            <th><div align="center">{{ date('F', mktime(0, 0, 0, $count['bulan'], 10)) }}</div></th>
                             <td><div align="center">{{ $count['total'] }}</div></td>
                             <td><div align="center">{{ $count['countLess'] }}</div></td>
                             <td><div align="center">{{ $count['countGreater'] }}</div></td>
@@ -41,7 +41,7 @@
                             ?>
                         </tr>
                     @endforeach
-                    <tr class="alert alert-info">
+                    <tr>
                         <th colspan="4"><div align="right">Purata&nbsp;&nbsp;&nbsp;</div></th>
                         <th><div align="center">{{ number_format($total/$denominator, 2) }} %</div></th>
                     </tr>
@@ -79,7 +79,7 @@
                         ?>
                         @foreach($counts2 as $count)
                             <tr>
-                                <th class="alert alert-info"><div align="center">{{ date('F', mktime(0, 0, 0, $count['bulan'], 10)) }}</div></th>
+                                <th><div align="center">{{ date('F', mktime(0, 0, 0, $count['bulan'], 10)) }}</div></th>
                                 <td><div align="center">{{ $count['total'] }}</div></td>
                                 <td><div align="center">{{ $count['countLess'] }}</div></td>
                                 <td><div align="center">{{ $count['countGreater'] }}</div></td>
@@ -91,9 +91,9 @@
                                 ?>
                             </tr>
                         @endforeach
-                        <tr class="alert alert-info">
+                        <tr>
                             <th colspan="4"><div align="right">Purata&nbsp;&nbsp;&nbsp;</div></th>
-                            <th><div align="center">{{ number_format($total/$denominator, 2) }} %</div></th>
+                            <th><div align="center">{{ number_format($total/$denominator, 2) }} % </div></th>
                         </tr>
                     </tbody>
                 </table>

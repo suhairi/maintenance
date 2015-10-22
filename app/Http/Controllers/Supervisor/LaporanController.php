@@ -73,6 +73,13 @@ class LaporanController extends Controller
             ->where('status', 1)
             ->get();
 
+        if(Auth::user()->level->id == 1)
+        {
+            $users = User::where('status', 1)
+                ->where('level_id', '>', 1)
+                ->get();
+        }
+
         $data[] = null;
         $bil = 1;
 

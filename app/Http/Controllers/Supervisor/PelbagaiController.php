@@ -13,6 +13,7 @@ use App\Laporan;
 use App\Peralatan;
 use App\Unit;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Request;
 
 class PelbagaiController extends Controller
@@ -44,14 +45,17 @@ class PelbagaiController extends Controller
     {
         $tahun = Request::get('year');
 
-         if(Request::get('month') < 10)
-             $bulan = '0' . Request::get('month');
+        if(Request::get('month') < 10)
+            $bulan = '0' . Request::get('month');
+        else
+            $bulan = Request::get('month');
 
         $tarikh = $tahun . '-' . $bulan;
 
         $bil = 1;
         $laporans = Laporan::where('tarikh', 'like', $tarikh .'%')
-            ->paginate(10);
+            ->get();
+//            ->paginate(10);
 
 //        dd($laporans);
         return View('members.supervisor.laporan.bulanan', compact('bil', 'laporans'));
@@ -60,8 +64,10 @@ class PelbagaiController extends Controller
 
     public function bulananPenempatan()
     {
-        $dateFrom = Request::get('yearFrom') . '-0' . Request::get('monthFrom') . '-01';
-        $dateTo = Request::get('yearTo') . '-' . Request::get('monthTo') . '-31';
+        if(Request::get('month') < 10)
+            $date = Request::get('year') . '-0' . Request::get('month');
+        else
+            $date = Request::get('year') . '-' . Request::get('month');
 
         $counts = [];
         $bil = 1;
@@ -72,8 +78,66 @@ class PelbagaiController extends Controller
             ->where('status', 'active')
             ->get();
 
-        $rowspan = [];
-        $flag = true;
+        if(\Auth::user()->level->id == 1)
+        {
+            $kategoris = Kategori::where('status', 'active')
+                ->get();
+        }
+
+        foreach($kategoris as $kategori)
+        {
+            $peralatans = Peralatan::where('kategori_id', $kategori->id)
+                ->get();
+
+            foreach($peralatans as $peralatan)
+            {
+                $count = Laporan::where('tarikh', 'like', $date . '%')
+                    ->where('peralatan_id', $peralatan->id)
+                    ->count();
+
+                array_push($counts, ['kategori' => $kategori->nama, 'peralatan' => $peralatan->nama, 'count' => $count]);
+            }
+        }
+
+        $bil = 1;
+        $jumlah = 0;
+        foreach($counts as $count)
+        {
+            $jumlah += $count['count'];
+        }
+
+//        dd($counts);
+
+        return View('members.supervisor.laporan.bulananPenempatan', compact('bil', 'counts', 'units', 'kategoris', 'jumlah'));
+    }
+
+    public function bulananPpk()
+    {
+        if(Request::get('monthFrom') < 10)
+            $dateFrom = Request::get('yearFrom') . '-0' . Request::get('monthFrom') . '-01';
+        else
+            $dateFrom = Request::get('yearFrom') . '-' . Request::get('monthFrom') . '-01';
+
+        if(Request::get('monthTo') < 10)
+            $dateTo = Request::get('yearTo') . '-0' . Request::get('monthTo') .'-01';
+        else
+            $dateTo = Request::get('yearTo') . '-' . Request::get('monthTo') . '-01';
+
+        $counts = [];
+        $bil = 1;
+
+        $units = Unit::find(\Auth::user()->unit);
+
+        $kategoris = Kategori::where('unit', \Auth::user()->unit)
+            ->where('status', 'active')
+            ->get();
+
+        if(\Auth::user()->level->id == 1)
+        {
+            $kategoris = Kategori::where('status', 'active')
+                ->get();
+        }
+
         foreach($kategoris as $kategori)
         {
             $peralatans = Peralatan::where('kategori_id', $kategori->id)
@@ -87,8 +151,6 @@ class PelbagaiController extends Controller
                     ->count();
 
                 array_push($counts, ['kategori' => $kategori->nama, 'peralatan' => $peralatan->nama, 'count' => $count]);
-
-
             }
         }
 
@@ -99,13 +161,15 @@ class PelbagaiController extends Controller
             $jumlah += $count['count'];
         }
 
+//        dd($counts);
+
         return View('members.supervisor.laporan.bulananPenempatan', compact('bil', 'counts', 'units', 'kategoris', 'jumlah'));
     }
 
     public function tahunanPpk()
     {
         $bil = 1;
-        $counts = Array();
+        $counts = [];
 
         $wilayahs = Bahagian::where('nama', 'like', 'wilayah%')
             ->get();
@@ -118,11 +182,28 @@ class PelbagaiController extends Controller
 
             foreach($cawangans as $cawangan)
             {
-                $laporans = Laporan::where('cawangan_id', $cawangan->id)
-                    ->where('tarikh', 'like', Request::get('year') . '%')
-                    ->count();
+//                dd(Auth::user()->level->id);
+                $bilangan = 0;
+                if(Auth::user()->level->id == 1) {
+                    $laporans = Laporan::where('cawangan_id', $cawangan->id)
+                        ->where('tarikh', 'like', Request::get('year') . '%')
+                        ->count();
+                    $bilangan = $laporans;
 
-                $data = ['ppk' => $cawangan->nama, 'bilangan' => $laporans];
+                } else {
+
+                    $laporans = Laporan::where('cawangan_id', $cawangan->id)
+                        ->where('tarikh', 'like', Request::get('year') . '%')
+                        ->get();
+
+                    foreach ($laporans as $laporan)
+                    {
+                        if ($laporan->peralatan->kategori->units->id == Auth::user()->units->id)
+                            $bilangan++;
+                    }
+                }
+
+                $data = ['ppk' => $cawangan->nama, 'bilangan' => $bilangan];
                 array_push($counts, $data);
             }
         }
@@ -139,7 +220,7 @@ class PelbagaiController extends Controller
     public function tahunanXPpk()
     {
         $bil = 1;
-        $counts = Array();
+        $counts = [];
 
         $wilayahs = Bahagian::where('nama', 'not like', 'wilayah%')
             ->get();
@@ -152,11 +233,27 @@ class PelbagaiController extends Controller
 
             foreach($cawangans as $cawangan)
             {
-                $laporans = Laporan::where('cawangan_id', $cawangan->id)
-                    ->where('tarikh', 'like', Request::get('year') . '%')
-                    ->count();
+                $bilangan = 0;
+                if(Auth::user()->level->id == 1) {
+                    $laporans = Laporan::where('cawangan_id', $cawangan->id)
+                        ->where('tarikh', 'like', Request::get('year') . '%')
+                        ->count();
+                    $bilangan = $laporans;
 
-                $data = ['ppk' => $cawangan->nama, 'bilangan' => $laporans];
+                } else {
+
+                    $laporans = Laporan::where('cawangan_id', $cawangan->id)
+                        ->where('tarikh', 'like', Request::get('year') . '%')
+                        ->get();
+
+                    foreach ($laporans as $laporan)
+                    {
+                        if ($laporan->peralatan->kategori->units->id == Auth::user()->units->id)
+                            $bilangan++;
+                    }
+                }
+
+                $data = ['ppk' => $cawangan->nama, 'bilangan' => $bilangan];
                 array_push($counts, $data);
             }
         }
@@ -167,7 +264,6 @@ class PelbagaiController extends Controller
             $jumlah += $count['bilangan'];
         }
 
-//        dd($counts);
         return View('members.supervisor.laporan.tahunanXPpk', compact('bil', 'counts', 'jumlah'));
     }
 

@@ -29,7 +29,14 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>{{ $bil++ }}</td>
-                                    <td>{{ strtoupper(strtolower($user->nama)) }}</td>
+                                    <td>
+                                        {{ strtoupper(strtolower($user->nama)) }}
+                                        @if(Auth::user()->level->id == 1)
+                                            <br />
+                                            <small>{{ $user->level->nama }}</small>
+                                        @endif
+
+                                    </td>
                                     <td align="center">
 
                                         @if($user->belumSelesai == 0)

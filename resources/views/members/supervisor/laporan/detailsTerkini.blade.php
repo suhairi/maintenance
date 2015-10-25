@@ -44,6 +44,8 @@
                         @endif
 
                         @foreach($laporans as $laporan)
+
+                            {{--{{ dd($laporan) }}--}}
                             <tr>
                                 <td>{{ $bil ++  }}</td>
                                 <td>
@@ -60,7 +62,9 @@
                                 <td>
                                     @if(!empty($laporan->laporanstatus->nama))
                                         {{ $laporan->laporanstatus->nama }} <br /><br />
-                                        <small>Siap pada : <br />{{ $laporan->tarikhSiap->format('d-m-Y') }}</small>
+                                        @if($laporan->status != 0)
+                                            <small>Siap pada : <br />{{ $laporan->tarikhSiap->format('d-m-Y') }}</small>
+                                        @endif
                                     @endif
                                 </td>
                                 <td align="center">

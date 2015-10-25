@@ -13,6 +13,9 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('complaint') }}">Aduan Sistem</a></li>
+                @if(Auth::user()->level_id == 1)
+                    <li><a href="{{ route('members.admin.todolist') }}">To Do List</a></li>
+                @endif
                 {{--<li><a href="#">Mesej</a></li>--}}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laporan <span class="caret"></span></a>

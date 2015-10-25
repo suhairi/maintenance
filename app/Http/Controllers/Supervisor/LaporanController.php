@@ -88,10 +88,12 @@ class LaporanController extends Controller
             //Belum Selesai
             $belumSelesai = Laporan::where('user', $user->username)
                 ->where('tarikh', '>=', Carbon::now()->startOfMonth())
-                ->where('status', '')
-                ->where('status', '!=', 4)
+                ->where('status', 0)
                 ->count();
             $user['belumSelesai'] = $belumSelesai;
+
+//            dd(Carbon::now()->startOfMonth()->format('Y-m-d'));
+//            dd($belumSelesai);
 
             //KIV
             $kiv = Laporan::where('user', $user->username)
@@ -130,7 +132,6 @@ class LaporanController extends Controller
             //Jumlah Bulan Semasa, KIV dan Belum Selesai
             $grandTotal = Laporan::where('user', $user->username)
                 ->where('status', '!=', 4)
-                ->where('status', '!=', 0)
                 ->count();
             $user['grandTotal'] = $grandTotal;
         }
@@ -147,12 +148,12 @@ class LaporanController extends Controller
         {
             $status = 'Belum Selesai';
             $laporans = Laporan::where('user', $username)
-                ->where('tarikhSiap', 'like', '0000-00-00%')
                 ->where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
-                ->where('status', '!=', 4)
-                ->where('status', '')
+                ->where('status', 0)
                 ->paginate(10);
             $title = 'Belum Selesai';
+
+//            dd($laporans->toArray());
 
         } else if($status == 'totalCurrent') {
             $laporans = Laporan::where('user', $username)

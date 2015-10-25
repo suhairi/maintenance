@@ -22,6 +22,11 @@ class UserController extends Controller
         $this->middleware('auth', ['except' => ['index', 'postLogin', 'login']]);
     }
 
+    public function todolist()
+    {
+        return View('todolist');
+    }
+
     public function index()
     {
         if(Auth::guest())

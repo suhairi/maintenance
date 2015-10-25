@@ -242,6 +242,8 @@ class UserTableSeeder extends Seeder {
         Laporanstatus::create(['id' => '2', 'nama' => 'Dalam Pelaksanaan']);
         Laporanstatus::create(['id' => '3', 'nama' => 'KIV']);
         Laporanstatus::create(['id' => '4', 'nama' => 'Selesai']);
+        Laporanstatus::create(['id' => '5', 'nama' => 'Belum Selesai']);
+        Laporanstatus::where('id', 5)->update(['id' => '0']);
 
         Userstatus::where('id', 2)->update(['id' => '0']);
 

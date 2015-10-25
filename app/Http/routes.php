@@ -69,6 +69,11 @@ Route::group(['prefix' => '/members'], function()
 
     Route::group(['prefix' => '/admin'], function()
     {
+        Route::get('todolist', [
+            'as'    => 'members.admin.todolist',
+            'uses'  => 'UserController@todolist'
+        ]);
+
         Route::resource('/profile', 'Admin\ProfileController', ['only' => ['index', 'store', 'edit', 'update', 'destroy', 'users']]);
 
         Route::get('/profiles/activate', [

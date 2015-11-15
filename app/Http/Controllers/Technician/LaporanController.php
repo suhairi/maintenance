@@ -24,7 +24,7 @@ class LaporanController extends Controller
         $bil = 1;
         $laporans = Laporan::where('user', Auth::user()->username)
             ->where('status', '')
-            ->orWhere('status', null)
+            ->orWhere('status', 0)
             ->get();
 
         \Session::put('lastReport', \Route::currentRouteName());
@@ -90,6 +90,8 @@ class LaporanController extends Controller
         $laporans = Laporan::where('tarikh', 'like', Carbon::now()->format('Y-m') . '%')
             ->where('user', Auth::user()->username)
             ->get();
+
+//        dd($laporans);
 
         return View('members.technician.laporan.terkini', compact('bil', 'laporans'));
     }

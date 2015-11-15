@@ -8,17 +8,17 @@
     <meta name="author" content="">
     <link rel="icon" href="images/favicon.ico">
 
-    <title>e-Maintenance - {{ Auth::user()->level->nama }}</title>
+    <title>e-Maintenance - {{ Auth::user()->nama }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/navbar-static-top.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/navbar-static-top_cetak.css') }}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><![endif]-->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/angular.min.js') }}"></script>
-    <script src="{{ asset('js/ie-emulation-modes-warning.js') }}"></script>
+    {{--<script src="{{ asset('js/angular.min.js') }}"></script>--}}
+    {{--<script src="{{ asset('js/ie-emulation-modes-warning.js') }}"></script>--}}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
 
 <body ng-controller="myCtrl">
 
-@include('layouts.nav_top')
+{{--@include('layouts.nav_top')--}}
 
 <div class="container">
     @yield('content')
@@ -40,8 +40,8 @@
 
 {{--<script src="{{ asset('js/bootstrap.min.js') }}"></script>--}}
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}"></script>
+{{--<script src="{{ asset('js/bootstrap.min.js') }}"></script>--}}
+{{--<script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}"></script>--}}
 
 </body>
 </html>

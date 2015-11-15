@@ -228,6 +228,11 @@ Route::group(['prefix' => '/members'], function()
             'uses'          => 'Technician\LaporanController@index'
         ]);
 
+        Route::get('/cetak', [
+            'as'            => 'members.technician.index.cetak',
+            'uses'          => 'Technician\CetakController@index'
+        ]);
+
         Route::get('laporan/{id}/edit', [
             'as'            => 'members.technician.edit',
             'uses'          => 'Technician\LaporanController@edit'

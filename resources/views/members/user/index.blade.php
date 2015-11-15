@@ -17,7 +17,7 @@
 
                 <div class="panel-body">
                     {!! Form::open() !!}
-                    @include('forms._laporan', ['submitButton' => 'Rekod Aduan'])
+                        @include('forms._laporan', ['submitButton' => 'Rekod Aduan'])
                     {!! Form::close() !!}
                 </div>
             </div>

@@ -8,7 +8,7 @@
             <div class="panel panel-info">
 
                 <div class="panel-heading">
-                    <h4>Senarai Laporan Baru</h4>
+                    <h4>Senarai Laporan Bulan Ini</h4>
                 </div>
 
                 <div class="panel-body">

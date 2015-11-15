@@ -30,6 +30,8 @@
     {!! Form::textarea('ringkasanKerosakan', null, ['class' => 'form-control', 'placeholder' => 'Ringkasan Kerosakan', 'rows' => '4']) !!}
 </div>
 
+{!! Form::hidden('status', 0) !!}
+
 <div class="form-group" align="right">
     {!! Form::submit($submitButton, ['class' => 'btn btn-primary']) !!}
 </div>

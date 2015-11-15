@@ -1,0 +1,1 @@
+<div align="right"> <a href="{{ route($value) }}" target="_blank"><i class="glyphicon glyphicon-print"></i> </a> </div><br />

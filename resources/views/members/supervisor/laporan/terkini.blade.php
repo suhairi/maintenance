@@ -6,6 +6,8 @@
 
         <div class="col-xs-12">
 
+            @include('display._cetak', ['value' => 'members.technician.terkini.cetak'])
+
             <div class="panel panel-primary printable" id="printable">
                 <div class="panel-heading">
                     <h4>Ringkasan Laporan Terkini</h4>
@@ -116,88 +118,9 @@
                     </table>
                 </div>
             </div>
-            <table class="table hidden-print">
-                <tr>
-                    <td align="right"><button id="print" onclick="printContent('printable')" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Cetak</button></td>
-                </tr>
-            </table>
 
         </div>
-
-        {{--<div class="col-xs-4 hidden-print">--}}
-            {{--<div class="panel panel-primary">--}}
-                {{--<div class="panel-heading">--}}
-                    {{--<h4>Carta</h4>--}}
-                {{--</div>--}}
-                {{--<div class="panel-body">--}}
-                    {{--<div id="container" style="width:100%; height:400px;"></div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-
     </div>
 
-
-    <script language="javascript">
-
-        //Charts
-        $(document).ready(function () {
-            $('#container').highcharts({
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Tugasan'
-                },
-                xAxis: {
-                    categories: ['Belum Selesai', 'KIV', 'Selesai', 'Closing']
-                },
-                yAxis: {
-                    title: {
-                        text: 'Bilangan Tugasan'
-                    }
-                },
-                credits: {
-                    text: '<a href="http://www.mada.gov.my> MADA </a>',
-                    enabled: true
-                },
-                series: [{
-                    name: 'Akmal',
-                    data: [1, 0, 4, 4]
-                }, {
-                    name: 'Marziani',
-                    data: [5, 7, 3, 6]
-                },
-                {
-                    name: 'Rohana',
-                    data: [6, 8, 9, 4]
-                },
-                {
-                    name: 'Suhairi',
-                    data: [0, 5, 3, 5]
-                }]
-            });
-        });
-
-        //Print Function
-        function printContent(el){
-//            var DocumentContainer = document.getElementById(el);
-//            var WindowObject = window.open('', 'PrintWindow', 'width=900,height=900,top=150,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes');
-//            WindowObject.document.writeln(DocumentContainer.innerHTML);
-//            WindowObject.document.close();
-//            WindowObject.focus();
-//            WindowObject.print();
-//            WindowObject.close();
-
-            w = window.open(null, 'Print_Page', 'scrollbars=yes');
-            var myStyle = '<link rel="stylesheet" href="http://maintenance2.dev/css/bootstrap.css" media="all" />';
-            w.document.write(myStyle + jQuery('#printable').html());
-            w.document.close();
-            w.print();
-        }
-
-
-
-    </script>
 
 @stop

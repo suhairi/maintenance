@@ -5,6 +5,8 @@
     <div class="row">
         <div class="md-xs-6">
 
+            @include('display._cetak', ['value' => 'members.technician.terkini.cetak'])
+
             <div class="panel panel-info">
 
                 <div class="panel-heading">

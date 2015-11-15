@@ -11,7 +11,7 @@
     <title>e-Maintenance - {{ Auth::user()->level->nama }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="all">
     <link href="{{ asset('css/navbar-static-top.css') }}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->

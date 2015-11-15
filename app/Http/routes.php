@@ -258,6 +258,11 @@ Route::group(['prefix' => '/members'], function()
             'uses'          => 'Technician\LaporanController@terkini'
         ]);
 
+        Route::get('laporan/terkini/cetak', [
+            'as'            => 'members.technician.terkini.cetak',
+            'uses'          => 'Technician\CetakController@terkini'
+        ]);
+
 
     });
 

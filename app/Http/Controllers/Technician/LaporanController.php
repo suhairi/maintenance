@@ -23,8 +23,7 @@ class LaporanController extends Controller
     {
         $bil = 1;
         $laporans = Laporan::where('user', Auth::user()->username)
-            ->where('status', '')
-            ->orWhere('status', 0)
+            ->where('status', 0)
             ->get();
 
         \Session::put('lastReport', \Route::currentRouteName());

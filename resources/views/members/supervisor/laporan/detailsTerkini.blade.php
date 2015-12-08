@@ -75,7 +75,9 @@
                                     {{ $laporan->tarikh->diffInDays($tarikh) }}
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger">Batal</button>
+                                    <a href="{{ route("members.supervisor.laporan.batal", ['id' => $laporan->id]) }}">
+                                        <button class="btn btn-danger">Batal</button>
+                                    </a>
                                     <a href="{{ route('members.supervisor.laporan.kemaskini', ['id' => $laporan->id]) }}">
                                         <button class="btn btn-success">Kemaskini</button>
                                     </a>

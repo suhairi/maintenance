@@ -32,6 +32,7 @@
 @include('layouts.nav_top')
 
 <div class="container">
+    @include('notify.notifications')
     @yield('content')
 </div>
 

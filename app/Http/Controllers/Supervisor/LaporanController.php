@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Session;
 use Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -205,6 +206,25 @@ class LaporanController extends Controller
         return View('members.supervisor.laporan.kemaskini', compact('laporan', 'cawangan', 'peralatan'));
     }
 
+    public function batal($id)
+    {
+        $laporan = Laporan::find($id);
+
+        $laporan->user = "";
+        $laporan->tarikhSiap = "0000-00-00 00:00:00";
+        $laporan->noJobsheet = "";
+        $laporan->status = 0;
+        $laporan->catatan = "";
+
+        if($laporan->save())
+        {
+            Session::flash('success', 'Berjaya. Laporan telah dibatalkan.');
+        }else{
+            Session::flash('error', 'Gagal. Laporan gagal dibatalkan.');
+        }
+
+        return Redirect::back();
+    }
     public function update2($id)
     {
         $laporan = Laporan::findOrFail($id);

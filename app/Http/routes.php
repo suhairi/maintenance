@@ -211,8 +211,6 @@ Route::group(['prefix' => '/members'], function()
                 'uses'          => 'Supervisor\LaporanController@batal'
             ]);
 
-
-
             // give a selesai status to a laporan
             Route::post('updates/{id}', [
                 'as'            => 'members.supervisor.laporan.update2',
